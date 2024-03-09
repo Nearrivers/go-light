@@ -3,6 +3,7 @@ package request
 import (
 	"crypto/tls"
 	"fmt"
+	"io"
 	"net/http"
 	"os"
 
@@ -22,7 +23,6 @@ const (
 func NewHueBodylessRequest(method HttpMethod, uri string) (*http.Response, error) {
 	var bridgeIp string = os.Getenv("BRIDGE_IP")
 	client := http.Client{}
-	fmt.Println(fmt.Printf("https://%s/%s", bridgeIp, uri))
 	http.DefaultTransport.(*http.Transport).TLSClientConfig = &tls.Config{InsecureSkipVerify: true}
 	req, err := http.NewRequest(string(method), fmt.Sprintf("https://%s/%s", bridgeIp, uri), nil)
 
@@ -38,10 +38,10 @@ func NewHueBodylessRequest(method HttpMethod, uri string) (*http.Response, error
 }
 
 // Effectue une requête HTTP qui nécessite un corps dans la requête
-func NewHueRequestWithBody(method HttpMethod, uri string) (*http.Response, error) {
+func NewHueRequestWithBody(method HttpMethod, uri string, body io.Reader) (*http.Response, error) {
 	var bridgeIp string = os.Getenv("BRIDGE_IP")
 	client := http.Client{}
-	req, err := http.NewRequest(string(method), fmt.Sprintf("https://%s/%s", bridgeIp, uri), nil)
+	req, err := http.NewRequest(string(method), fmt.Sprintf("https://%s/%s", bridgeIp, uri), body)
 
 	if err != nil {
 		return &http.Response{}, err

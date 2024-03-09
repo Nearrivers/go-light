@@ -18,12 +18,12 @@ type AppBulb struct {
 // Liste des appareils trouvés pendant l'exécution de l'application
 type AppBulbs []AppBulb
 
-type ResourceIdentifierGet struct {
+type resourceIdentifierGet struct {
 	Rid   string `json:"rid"`   // Identifiant unique de la ressource
 	Rtype string `json:"rtype"` // Type de la ressource
 }
 
-type ProductData struct {
+type productData struct {
 	ModelId              string `json:"model_id"`               // Identifiant unique du modèle de l'appareil
 	ManufacturerName     string `json:"manufacturer_name"`      // Nom du fabricant de l'appareil
 	ProductName          string `json:"product_name"`           // Nom du produit
@@ -33,12 +33,12 @@ type ProductData struct {
 	HardwarePlatformType string `json:"hardware_platform_type"` // Type du matériel; identifié par le code du fabricant et ImageType
 }
 
-type MetaData struct {
+type metaData struct {
 	Name      string `json:"name"`      // Nom de la ressource lisible par un humain
 	Archetype string `json:"archetype"` // Par défaut égal à l'archétype donné par le fabricant. Modifiable par un utilisateur
 }
 
-type UserTest struct {
+type userTest struct {
 	Status string `json:"status"` // Egal à "set" ou "changing"
 	// Active ou prolonge le mode _usertest_ de l'utilisateur pour 120 secondes. false désactive le mode usertest.
 	//
@@ -49,10 +49,10 @@ type UserTest struct {
 type DeviceGet struct {
 	Type        string                  `json:"type"` // (device) Type des ressources supportées
 	Id          string                  `json:"id"`   // Identifiant unique représentant une instance d'une ressource spécifique
-	ProductData ProductData             `json:"product_data"`
-	MetaData    MetaData                `json:"metadata"` // Métadonnées
-	UserTest    UserTest                `json:"usertest"`
-	Services    []ResourceIdentifierGet `json:"services"` // Liste tous les services qui fournissent un c
+	ProductData productData             `json:"product_data"`
+	MetaData    metaData                `json:"metadata"` // Métadonnées
+	UserTest    userTest                `json:"usertest"`
+	Services    []resourceIdentifierGet `json:"services"` // Liste tous les services qui fournissent un c
 }
 
 // Récupère la liste des appareils Phillips Hue
